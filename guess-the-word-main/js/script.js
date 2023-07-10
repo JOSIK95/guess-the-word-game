@@ -12,8 +12,8 @@ const guessedLetters = [];
 
 const placeholderDot = function(word){
     const placeholderLetter = [];
-    for (const letterInput of word){
-        console.log(letterInput);
+    for (const letter of word){
+        console.log(letter);
         placeholderLetter.push("●");
     }
     wordInProgress.innerText = placeholderLetter.join("");
@@ -24,12 +24,13 @@ placeholderDot(word)
 guessLetterButton.addEventListener("click", function (e){
     e.preventDefault();
     const userInput = letterInput.value;
-    console.log(userInput);
-    validateInput(userInput);
-    const guess = letterInput.value;
-    const goodGuess = validateInput(guess);
+    
+    console.log(userInput)
+    
+    const goodGuess = validateInput(userInput);
     if (goodGuess){
-        makeGuess(guess);
+      makeGuess(userInput);
+    
     }
     letterInput.value = "";
     });
@@ -39,13 +40,18 @@ guessLetterButton.addEventListener("click", function (e){
         const acceptedLetter = /[a-zA-Z]/;
     
         if (letterInput.length === 0){
-    hiddenMessage.innerText = "Please enter a letter!";
-        }    else if (letterInput.length >= 1){
+        hiddenMessage.innerText = "Please enter a letter!";
+    
+        }   else if (letterInput.length > 1){
             hiddenMessage.innerText = "Please enter a single letter.";
+        
         }else if (!letterInput.match(acceptedLetter)){
             hiddenMessage.innerText = "Please enter a letter from A to Z.";
+            
         } else {
+            
             return letterInput;
+          
         }
     };
 
@@ -68,9 +74,9 @@ if (guessedLetters.includes(guess)){
 
 const showLetters = function(){
     guessedLettersElement.innerHTML = "";
-    for (const letterInput of guessedLetters ){
+    for (const letter of guessedLetters ){
         const li = document.createElement("li");
-        li.innerText = letterInput;
+        li.innerText = letter;
         guessedLettersElement.append(li);
 
     }
@@ -80,9 +86,9 @@ const correctLetters = function (guessedLetters){
     const wordUpper = word.toUpperCase();
     const wordArray = wordUpper.split("");
     const reveal = [];
-    for (const letterInput of wordArray){
-if (guessedLetters.includes(letterInput)){
-    reveal.push(letterInput.toUpperCase());
+    for (const letter of wordArray){
+if (guessedLetters.includes(letter)){
+    reveal.push(letter.toUpperCase());
 }else {
     reveal.push("●");
 }
