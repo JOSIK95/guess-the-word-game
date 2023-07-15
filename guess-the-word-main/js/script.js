@@ -1,4 +1,4 @@
-const guessedLettersElement = document.querySelector(".guess-form");
+const guessedLettersElement = document.querySelector(".guessed-letters");
 const guessLetterButton = document.querySelector(".guess");
 const letterInput = document.querySelector(".letter");
 const wordInProgress = document.querySelector(".word-in-progress");
@@ -21,6 +21,7 @@ const placeholderDot = function(word){
 placeholderDot(word)
 
 
+
 guessLetterButton.addEventListener("click", function (e){
     e.preventDefault();
     const userInput = letterInput.value;
@@ -29,13 +30,13 @@ guessLetterButton.addEventListener("click", function (e){
     
     const goodGuess = validateInput(userInput);
     if (goodGuess){
-      makeGuess(userInput);
+      makeGuess (userInput);
     
     }
     letterInput.value = "";
     });
     
-    
+
     const validateInput = function (letterInput){
         const acceptedLetter = /[a-zA-Z]/;
     
@@ -59,7 +60,7 @@ guessLetterButton.addEventListener("click", function (e){
 const makeGuess = function (guess){
 guess = guess.toUpperCase();
 if (guessedLetters.includes(guess)){
-    message.innerText = "You already guessed that silly! Try again."
+    hiddenMessage.innerText = "You already guessed that silly! Try again."
     console.log(guessedLetters);
 }else{ 
     guessedLetters.push(guess)
@@ -77,7 +78,7 @@ const showLetters = function(){
     for (const letter of guessedLetters ){
         const li = document.createElement("li");
         li.innerText = letter;
-        guessedLettersElement.append(li);
+        wordInProgress.append(li);
 
     }
 };
@@ -93,10 +94,17 @@ if (guessedLetters.includes(letter)){
     reveal.push("●");
 }
     }
-
-
-    console.log(reveal);
-   
+wordInProgress.innerText = reveal.join("");
+validateWin();
 };
+
+
+const validateWin = function (){
+    if(word.toUpperCase() === wordInProgress.innerText){
+        hiddenMessage.classList.add("win");
+        hiddenMessage.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
+    }
+};
+
 
 
