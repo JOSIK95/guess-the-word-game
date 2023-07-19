@@ -7,9 +7,23 @@ const remainingGuessesSpan = document.querySelector(".remaining span");
 const hiddenMessage = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-agian");
 
-const word = "magnolia"; /*------test word------*/
+let word = "magnolia"; /*------test word------*/
 const guessedLetters = [];
 let remainingGuesses = 8;
+
+
+const getWord = async function(){
+    const randomWord = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+    const words = await randomWord.text();
+    console.log(words);
+    const wordArray = words.split("\n");
+    console.log(wordArray);
+    const randomIndex = Math.floor(Math.random() * wordArray.length);
+    word = wordArray[randomIndex].trim();
+    placeholderDot(word);
+};
+
+
 
 
 const placeholderDot = function(word){
@@ -20,7 +34,7 @@ const placeholderDot = function(word){
     }
     wordInProgress.innerText = placeholderLetter.join("");
 };
-placeholderDot(word)
+getWord()
 
 
 
@@ -37,7 +51,7 @@ guessLetterButton.addEventListener("click", function (e){
     }
     letterInput.value = "";
     });
-    
+   
 
     const validateInput = function (letterInput){
         const acceptedLetter = /[a-zA-Z]/;
@@ -98,7 +112,7 @@ if (guessedLetters.includes(letter)){
 }
     }
 wordInProgress.innerText = reveal.join("");
-numGuessesLeft();
+
 validateWin();
 };
 
